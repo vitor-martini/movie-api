@@ -16,5 +16,5 @@ npm i && npm start
 
 2. To create the tables and populate it
 ```bash
-npm run migrate && npm run seeds
+npm run migrate && npm run seed
 
