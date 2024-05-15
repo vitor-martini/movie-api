@@ -15,39 +15,49 @@ class MovieUserController {
       throw new AppError("This user does not exists.")
     }
 
+    const checkMovieInCollection = await knex("movies_users")
+      .where({ movie_id })
+      .where({ user_id })
+    if (checkMovieInCollection.length > 0) {
+      throw new AppError("This movie is already in the collection.")
+    }
+
     await knex("movies_users").insert({
       movie_id,
       user_id,
       rating
     })
 
-    response.status(201).json({ title, description })
+    response.status(201).json()
   }
 
   async update(request, response) {
-    const { rating } = request.body
-    const { id } = request.params
+    const { id, rating } = request.body 
 
-    const updatedMovie = await knex("movies_users").where({ id }).first()
+    const updatedMovie = await knex("movies_users")
+      .where({ id })
+      .first()
+
     if (!updatedMovie){
-      throw new AppError("Invalid movies_users ID.")
+      throw new AppError("It was not found a row with this values.")
     }
 
     updatedMovie.rating = rating ?? updatedMovie.rating
 
     await knex("movies_users")
-    .where({ id })
-    .update({
-      rating: updatedMovie.rating,
-    })
+      .where({ id })
+      .update({
+        rating: updatedMovie.rating,
+      })
 
     response.json()
   }
 
   async delete(request, response) {
     const { id } = request.params
-    const movie = await knex("movies_users").where({ id }).first()
-    if (!movie) {
+    const movieUser = await knex("movies_users").where({ id }).first()
+    
+    if (!movieUser) {
       throw new AppError("Invalid movies_users ID.")
     }
 
@@ -59,40 +69,44 @@ class MovieUserController {
   }
 
   async index(request, response) {
-    const { user_id } = request.query;
+    const { user_id, title, tags } = request.body;
 
     if (!user_id) {
       throw new AppError("User id is required.")
     }
 
-    let query = knex("movies")
+    const movies = await knex("movies_users")
       .distinct([
-        "notes.id",
-        "notes.title",
-        "notes.description",
-        "notes.user_id",
+        "movies.id",
+        "movies.title",
+        "movies.description",
+        "movies_users.rating",
       ])
-      .where("notes.user_id", user_id)
-      .whereLike("notes.title", `%${title ?? ""}%`)
-      .innerJoin("tags", "notes.id", "tags.note_id")
-      .orderBy("notes.title");
+      .where("movies_users.user_id", user_id)
+      .where("movies.active", true)
+      .whereLike("movies.title", `%${title ?? ""}%`)
+      .innerJoin("movies", "movies.id", "movies_users.movie_id")
+      .orderBy("movies.title");
 
-    if (tags) {
-      const tagsArray = tags.split(",").map(tag => tag.trim());
-      query = query.whereIn("tags.name", tagsArray);
-    }
+    const moviesIds = movies.map(movie => movie.id)
+    const moviesTags = await knex("movies_users_tags")
+      .whereIn("movie_user_id", moviesIds)
 
-    const notes = await query;
-    const userTags = await knex("tags").where({ user_id });
-    const notesWithTags = notes.map(note => {
-      let tags = userTags.filter(tag => tag.note_id === note.id)
+    let collectionWithTags = movies.map(movie => {
+      let movieTags = moviesTags.filter(tag => tag.movie_user_id === movie.id).map(tag => tag.name)
       return {
-        ...note,
-        tags
+        ...movie,
+        tags: movieTags
       }
     })
+    
+    if (tags) {
+      collectionWithTags = collectionWithTags.filter(collection => {
+        return collection.tags.some(tag => tags.includes(tag));
+      });
+    }
 
-    return response.json(notesWithTags)
+    return response.json(collectionWithTags)
   }
 }
 
