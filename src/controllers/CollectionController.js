@@ -1,7 +1,7 @@
 const AppError = require("../utils/AppError.js")
 const knex = require("../database/knex/index.js")
 
-class MovieUserController {
+class CollectionController {
   async create(request, response) {
     const { movie_id, user_id, rating } = request.body 
 
@@ -15,14 +15,14 @@ class MovieUserController {
       throw new AppError("This user does not exists.")
     }
 
-    const checkMovieInCollection = await knex("movies_users")
+    const checkCollection = await knex("collections")
       .where({ movie_id })
       .where({ user_id })
-    if (checkMovieInCollection.length > 0) {
+    if (checkCollection.length > 0) {
       throw new AppError("This movie is already in the collection.")
     }
 
-    await knex("movies_users").insert({
+    await knex("collections").insert({
       movie_id,
       user_id,
       rating
@@ -34,20 +34,20 @@ class MovieUserController {
   async update(request, response) {
     const { id, rating } = request.body 
 
-    const updatedMovie = await knex("movies_users")
+    const updatedCollection = await knex("collections")
       .where({ id })
       .first()
 
-    if (!updatedMovie){
+    if (!updatedCollection){
       throw new AppError("It was not found a row with this values.")
     }
 
-    updatedMovie.rating = rating ?? updatedMovie.rating
+    updatedCollection.rating = rating ?? updatedCollection.rating
 
-    await knex("movies_users")
+    await knex("collections")
       .where({ id })
       .update({
-        rating: updatedMovie.rating,
+        rating: updatedCollection.rating,
       })
 
     response.json()
@@ -55,13 +55,13 @@ class MovieUserController {
 
   async delete(request, response) {
     const { id } = request.params
-    const movieUser = await knex("movies_users").where({ id }).first()
+    const collection = await knex("collections").where({ id }).first()
     
-    if (!movieUser) {
-      throw new AppError("Invalid movies_users ID.")
+    if (!collection) {
+      throw new AppError("Invalid collection ID.")
     }
 
-    await knex("movies_users")
+    await knex("collections")
       .where({ id })
       .delete()
 
@@ -75,25 +75,25 @@ class MovieUserController {
       throw new AppError("User id is required.")
     }
 
-    const movies = await knex("movies_users")
+    const movies = await knex("collections")
       .distinct([
         "movies.id",
         "movies.title",
         "movies.description",
-        "movies_users.rating",
+        "collections.rating",
       ])
-      .where("movies_users.user_id", user_id)
+      .where("collections.user_id", user_id)
       .where("movies.active", true)
       .whereLike("movies.title", `%${title ?? ""}%`)
-      .innerJoin("movies", "movies.id", "movies_users.movie_id")
+      .innerJoin("movies", "movies.id", "collections.movie_id")
       .orderBy("movies.title");
 
-    const moviesIds = movies.map(movie => movie.id)
-    const moviesTags = await knex("movies_users_tags")
-      .whereIn("movie_user_id", moviesIds)
+    const collectionsIds = movies.map(movie => movie.id)
+    const moviesTags = await knex("tags")
+      .whereIn("collection_id", collectionsIds)
 
     let collectionWithTags = movies.map(movie => {
-      let movieTags = moviesTags.filter(tag => tag.movie_user_id === movie.id).map(tag => tag.name)
+      let movieTags = moviesTags.filter(tag => tag.collection_id === movie.id).map(tag => tag.name)
       return {
         ...movie,
         tags: movieTags
@@ -110,4 +110,4 @@ class MovieUserController {
   }
 }
 
-module.exports = MovieUserController
+module.exports = CollectionController
