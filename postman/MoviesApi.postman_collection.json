@@ -44,6 +44,40 @@
 						"url": "http://{{HOST}}:{{PORT}}/users/1"
 					},
 					"response": []
+				},
+				{
+					"name": "Avatar",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/vitor/Pictures/fotos/foto 1.jpeg"
+								}
+							]
+						},
+						"url": "http://{{HOST}}:{{PORT}}/users/avatar"
+					},
+					"response": []
+				},
+				{
+					"name": "Avatar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://{{HOST}}:{{PORT}}/files/131ce2dceedc30c68f69-foto 1.jpeg"
+					},
+					"response": []
 				}
 			]
 		},
@@ -54,10 +88,16 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n        \"title\": \"The Last Symphony\",\n        \"description\": \"In a post-apocalyptic world where music is banned, a defiant musician finds an old musical score that could lead to the revival of music, but must evade the authoritarian regime determined to silence her.\"\n    }",
+							"raw": " {\n    \"title\": \"Cipher of the Sun\",\n    \"description\": \"In a world where sunlight can be harvested as energy, a brilliant young engineer uncovers a conspiracy that could monopolize sunlight forever. Teaming up with a group of rogue scientists, they embark on a dangerous mission to stop the conspiracy before it plunges the world into darkness.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -72,17 +112,23 @@
 					"name": "Update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n        \"title\": \"The Last Symphony\",\n        \"description\": \"In a post-apocalyptic world where music is banned, a defiant musician finds an old musical score that could lead to the revival of music, but must evade the authoritarian regime determined to silence her.\",\n        \"active\": 1\n    }",
+							"raw": " {\n    \"title\": \"The Last Symphony\",\n    \"description\": \"In a post-apocalyptic world where music is banned, a defiant musician finds an old musical score that could lead to the revival of music, but must evade the authoritarian regime determined to silence her.\",\n    \"active\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://{{HOST}}:{{PORT}}/movies/1"
+						"url": "http://{{HOST}}:{{PORT}}/movies/6"
 					},
 					"response": []
 				},
@@ -93,7 +139,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -114,7 +166,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"title\": \"Echoes\"\n}",
@@ -137,10 +195,16 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"user_id\": 2,\n    \"movie_id\": 5,\n    \"rating\": 4\n}",
+							"raw": " {\n    \"movie_id\": 6,\n    \"rating\": 4\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -155,17 +219,23 @@
 					"name": "Update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"id\": 5,\n    \"rating\": 5\n}",
+							"raw": " {\n    \"rating\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://{{HOST}}:{{PORT}}/collections"
+						"url": "http://{{HOST}}:{{PORT}}/collections/4"
 					},
 					"response": []
 				},
@@ -173,17 +243,23 @@
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"id\": 2,\n    \"rating\": 7\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://{{HOST}}:{{PORT}}/collections/6"
+						"url": "http://{{HOST}}:{{PORT}}/collections/7"
 					},
 					"response": []
 				},
@@ -194,10 +270,16 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_id\": 1,\n    \"tags\": [\"ACAO\", \"AVENTURA\"]\n}",
+							"raw": "{\n    \"title\": \"Sun\",\n    \"tags\": [\"Férias\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -217,7 +299,13 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"collection_id\": 4,\n    \"name\": \"AVENTURA\"\n}",
@@ -235,7 +323,13 @@
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -245,7 +339,47 @@
 								}
 							}
 						},
-						"url": "http://{{HOST}}:{{PORT}}/collections/removeTag/3"
+						"url": "http://{{HOST}}:{{PORT}}/collections/removeTag/12"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.token) {",
+									"    pm.environment.set(\"authToken\", jsonData.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john@email.com\",\n    \"password\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{HOST}}:{{PORT}}/sessions"
 					},
 					"response": []
 				}
