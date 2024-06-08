@@ -17,7 +17,7 @@ exports.seed = async function(knex) {
       name: 'John Smith',
       email: 'smith@email.com',
       password: '$2a$08$O.w9aYVZbRdqo5ccWigTsuXy5hKSrSZY9Gdxj03OzpDqrdUXJ7i8G',
-      admin: true 
+      admin: false 
     },
   ]);
 };
