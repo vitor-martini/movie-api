@@ -3,7 +3,7 @@ const knex = require("../database/knex/index.js")
 
 class MovieController {
   async create(request, response) {
-    const { title, description } = request.body 
+    const { title, description, user_id } = request.body 
 
     const checkMovieExists = await knex("movies").where({ title })
 
@@ -14,13 +14,14 @@ class MovieController {
     await knex("movies").insert({
       title,
       description,
+      created_by: user_id
     })
 
     response.status(201).json({ title, description })
   }
 
   async update(request, response) {
-    const { title, description, active } = request.body
+    const { title, description, active, user_id } = request.body
     const { id } = request.params
 
     const updatedMovie = await knex("movies").where({ id }).first()
@@ -38,7 +39,8 @@ class MovieController {
       title: updatedMovie.title, 
       description: updatedMovie.description,
       active: updatedMovie.active,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      updated_by: user_id
     })
 
     response.json()
