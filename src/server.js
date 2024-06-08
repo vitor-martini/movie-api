@@ -3,11 +3,13 @@ const express = require("express")
 const routes = require("./routes")
 const AppError = require("./utils/AppError.js")
 const sqliteConnection = require("./database/sqlite")
+const uploadConfig = require("./configs/upload.js")
 
 const app = express()
 const PORT = 3333;
 app.use(express.json())
 app.use(routes)
+app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
 sqliteConnection()
 
 app.use((error, request, response, next) => {
