@@ -3,7 +3,8 @@ const knex = require("../database/knex/index.js")
 
 class CollectionController {
   async create(request, response) {
-    const { movie_id, user_id, rating } = request.body 
+    const { movie_id, rating } = request.body 
+    const user_id = request.user.id;
 
     const checkMovieExists = await knex("movies").where({ id: movie_id })
     if (checkMovieExists.length === 0) {
@@ -32,14 +33,19 @@ class CollectionController {
   }
 
   async update(request, response) {
-    const { id, rating } = request.body 
+    const { rating } = request.body 
+    const { id } = request.params
+    const user_id = request.user.id
 
     const updatedCollection = await knex("collections")
-      .where({ id })
+      .where({ 
+        id,
+        user_id
+      })
       .first()
 
     if (!updatedCollection){
-      throw new AppError("It was not found a row with this values.")
+      throw new AppError("Collection not found")
     }
 
     updatedCollection.rating = rating ?? updatedCollection.rating
@@ -55,10 +61,16 @@ class CollectionController {
 
   async delete(request, response) {
     const { id } = request.params
-    const collection = await knex("collections").where({ id }).first()
+    const user_id = request.user.id
+    const collection = await knex("collections")
+      .where({ 
+            id,
+            user_id
+          })
+      .first()
     
     if (!collection) {
-      throw new AppError("Invalid collection ID.")
+      throw new AppError("Collection not found.")
     }
 
     await knex("collections")
@@ -69,8 +81,9 @@ class CollectionController {
   }
 
   async index(request, response) {
-    const { user_id, title, tags } = request.body;
-
+    const { title, tags } = request.body;
+    const user_id = request.user.id;
+    
     if (!user_id) {
       throw new AppError("User id is required.")
     }

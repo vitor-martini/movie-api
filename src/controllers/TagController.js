@@ -4,8 +4,13 @@ const knex = require("../database/knex/index.js")
 class TagController {
   async create(request, response) {
     const { collection_id, name } = request.body 
+    const user_id = request.user.id
 
-    const checkCollectionExists = await knex("collections").where({ id: collection_id })
+    const checkCollectionExists = await knex("collections").where({ 
+      id: collection_id,
+      user_id
+    })
+    
     if (checkCollectionExists.length === 0) {
       throw new AppError("Movie not found in collection.")
     }
@@ -20,9 +25,15 @@ class TagController {
 
   async delete(request, response) {
     const { id } = request.params
+    const user_id = request.user.id
 
-    const checkTagExists = await knex("tags").where({ id })
-    if (checkTagExists.length === 0) {
+    const tag = await knex("tags")
+      .where("collections.user_id", user_id)
+      .where("tags.id", id)
+      .innerJoin("collections", "collections.id", "tags.collection_id")
+      .first()
+
+      if (!tag) {
       throw new AppError("Tag not found.")
     }
 

@@ -3,7 +3,8 @@ const knex = require("../database/knex/index.js")
 
 class MovieController {
   async create(request, response) {
-    const { title, description, user_id } = request.body 
+    const { title, description } = request.body 
+    const user_id = request.user.id;
 
     const checkMovieExists = await knex("movies").where({ title })
 
@@ -21,8 +22,9 @@ class MovieController {
   }
 
   async update(request, response) {
-    const { title, description, active, user_id } = request.body
+    const { title, description, active } = request.body
     const { id } = request.params
+    const user_id = request.user.id;
 
     const updatedMovie = await knex("movies").where({ id }).first()
     if (!updatedMovie){
@@ -56,7 +58,6 @@ class MovieController {
   async index(request, response) {
     const { title } = request.body;
 
-    console.log(title)
     const movies = await knex("movies")
       .whereLike("movies.title", `%${title ?? ""}%`)
       .orderBy("title");
