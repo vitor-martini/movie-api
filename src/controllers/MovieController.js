@@ -12,13 +12,13 @@ class MovieController {
       throw new AppError("This movie is already on the database.")
     }
 
-    await knex("movies").insert({
+    const movieId = await knex("movies").insert({
       title,
       description,
       created_by: user_id
-    })
+    });
 
-    response.status(201).json({ title, description })
+    response.status(201).json({ id: movieId[0] })
   }
 
   async update(request, response) {
