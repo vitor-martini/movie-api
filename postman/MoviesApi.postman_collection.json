@@ -185,6 +185,40 @@
 						"url": "http://{{HOST}}:{{PORT}}/movies"
 					},
 					"response": []
+				},
+				{
+					"name": "Cover",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cover",
+									"type": "file",
+									"src": "/home/vitor/Downloads/interstellar.jpg"
+								}
+							]
+						},
+						"url": "http://{{HOST}}:{{PORT}}/movies/cover/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Cover",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://{{HOST}}:{{PORT}}/files/8e0571608b265058d21e-interstellar.jpg"
+					},
+					"response": []
 				}
 			]
 		},
@@ -372,7 +406,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"john@email.com\",\n    \"password\": 123\n}",
+							"raw": "{\n    \"email\": \"jane@email.com\",\n    \"password\": 123\n}",
 							"options": {
 								"raw": {
 									"language": "json"
