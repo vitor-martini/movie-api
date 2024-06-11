@@ -50,7 +50,17 @@ class MovieController {
 
   async show(request, response) {
     const { id } = request.params;
-    const movie = await knex("movies").where({ id }).first();
+    const movie = await knex('movies as m')
+      .leftJoin('collections as c', 'm.id', 'c.movie_id')
+      .select(
+        'm.id',
+        'm.title',
+        'm.description',
+        'm.cover',
+        knex.raw('CAST(SUM(c.rating) AS FLOAT) / CAST(COUNT(c.id) AS FLOAT) as rating')
+      )
+      .where('m.id', id)
+      .groupBy('m.id', 'm.title', 'm.description', 'm.cover')
 
     return response.json(movie);
   }
@@ -58,11 +68,20 @@ class MovieController {
   async index(request, response) {
     const { title } = request.body;
 
-    const movies = await knex("movies")
-      .whereLike("movies.title", `%${title ?? ""}%`)
-      .orderBy("title");
+    const movies = await knex('movies as m')
+      .leftJoin('collections as c', 'm.id', 'c.movie_id')
+      .select(
+        'm.id',
+        'm.title',
+        'm.description',
+        'm.cover',
+        knex.raw('CAST(SUM(c.rating) AS FLOAT) / CAST(COUNT(c.id) AS FLOAT) as rating')
+      )
+      .whereLike('m.title', `%${title ?? ''}%`)
+      .groupBy('m.id', 'm.title', 'm.description', 'm.cover')
+      .orderBy('m.title');
 
-    return response.json(movies)
+    return response.json(movies);
   }
 
   async delete(request, response) {
