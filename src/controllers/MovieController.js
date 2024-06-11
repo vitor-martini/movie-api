@@ -66,7 +66,7 @@ class MovieController {
   }
 
   async index(request, response) {
-    const { title } = request.body;
+    const { title } = request.query;
 
     const movies = await knex('movies as m')
       .leftJoin('collections as c', 'm.id', 'c.movie_id')
