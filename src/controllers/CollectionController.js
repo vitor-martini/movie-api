@@ -88,18 +88,19 @@ class CollectionController {
       throw new AppError("User id is required.")
     }
 
-    const movies = await knex("collections")
+    const movies = await knex("collections as c")
       .distinct([
-        "movies.id",
-        "movies.title",
-        "movies.description",
-        "collections.rating",
+        "c.id",
+        "m.id as movie_id", 
+        "m.title",
+        "m.description",
+        "c.rating"
       ])
-      .where("collections.user_id", user_id)
-      .where("movies.active", true)
-      .whereLike("movies.title", `%${title ?? ""}%`)
-      .innerJoin("movies", "movies.id", "collections.movie_id")
-      .orderBy("movies.title");
+      .innerJoin("movies as m", "c.movie_id", "m.id")
+      .where("c.user_id", user_id)
+      .where("m.active", true)
+      .whereLike("m.title", `%${title ?? ""}%`)
+      .orderBy("m.title");
 
     const collectionsIds = movies.map(movie => movie.id)
     const moviesTags = await knex("tags")
