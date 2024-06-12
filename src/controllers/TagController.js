@@ -47,7 +47,7 @@ class TagController {
   async index(request, response) {
     const { id } = request.user;
     const tags = await knex("tags as t")
-      .distinct("t.name", "t.id")
+      .distinct("t.name")
       .innerJoin("collections as c", "c.id", "t.collection_id")
       .where("c.user_id", id)
       .orderBy("t.name")
