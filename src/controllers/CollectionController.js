@@ -81,9 +81,9 @@ class CollectionController {
   }
 
   async index(request, response) {
-    const { title, tags } = request.body;
+    const { tags } = request.query;
     const user_id = request.user.id;
-    
+
     if (!user_id) {
       throw new AppError("User id is required.")
     }
@@ -99,7 +99,6 @@ class CollectionController {
       .innerJoin("movies as m", "c.movie_id", "m.id")
       .where("c.user_id", user_id)
       .where("m.active", true)
-      .whereLike("m.title", `%${title ?? ""}%`)
       .orderBy("m.title");
 
     const collectionsIds = movies.map(movie => movie.id)
