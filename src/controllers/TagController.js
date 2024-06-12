@@ -43,6 +43,17 @@ class TagController {
 
     response.status(200).json()
   }
+
+  async index(request, response) {
+    const { id } = request.user;
+    const tags = await knex("tags as t")
+      .distinct("t.name", "t.id")
+      .innerJoin("collections as c", "c.id", "t.collection_id")
+      .where("c.user_id", id)
+      .orderBy("t.name")
+
+    response.status(200).json(tags)
+  }
 }
 
 module.exports = TagController

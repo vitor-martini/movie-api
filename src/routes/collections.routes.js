@@ -13,6 +13,7 @@ collectionsRoutes.put("/:id", collectionController.update);
 collectionsRoutes.get("/", collectionController.index);
 collectionsRoutes.delete("/:id", collectionController.delete);
 collectionsRoutes.post("/addTag", tagController.create);
+collectionsRoutes.get("/tags", tagController.index);
 collectionsRoutes.delete("/removeTag/:id", tagController.delete);
 
 module.exports = collectionsRoutes;
