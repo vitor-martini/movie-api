@@ -106,7 +106,10 @@ class CollectionController {
       .whereIn("collection_id", collectionsIds)
 
     let collectionWithTags = movies.map(movie => {
-      let movieTags = moviesTags.filter(tag => tag.collection_id === movie.id).map(tag => tag.name)
+      let movieTags = moviesTags
+        .filter(tag => tag.collection_id === movie.id)
+        .map(tag => ({ id: tag.id, name: tag.name }))
+
       return {
         ...movie,
         tags: movieTags
@@ -115,7 +118,7 @@ class CollectionController {
     
     if (tags) {
       collectionWithTags = collectionWithTags.filter(collection => {
-        return collection.tags.some(tag => tags.includes(tag));
+        return collection.tags.some(tag => tags.includes(tag.name));
       });
     }
 
