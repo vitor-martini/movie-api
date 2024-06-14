@@ -15,6 +15,14 @@ class TagController {
       throw new AppError("Movie not found in collection.")
     }
 
+    const checkTagAlreadyIncluded = await knex("tags")
+      .where({ collection_id, name })
+      .first();
+
+    if(checkTagAlreadyIncluded) {
+      throw new AppError("Tag alrerady included.")
+    }
+
     await knex("tags").insert({
       collection_id,
       name
