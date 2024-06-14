@@ -61,6 +61,7 @@ class MovieController {
       )
       .where('m.id', id)
       .groupBy('m.id', 'm.title', 'm.description', 'm.cover')
+      .first()
 
     return response.json(movie);
   }
