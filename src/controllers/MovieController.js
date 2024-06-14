@@ -52,11 +52,15 @@ class MovieController {
     const { id } = request.params;
     const movie = await knex('movies as m')
       .leftJoin('collections as c', 'm.id', 'c.movie_id')
+      .innerJoin('users as u', 'm.created_by', 'u.id')
       .select(
         'm.id',
         'm.title',
         'm.description',
         'm.cover',
+        'm.updated_at',
+        'u.name as created_by',
+        'u.avatar',
         knex.raw('CAST(SUM(c.rating) AS FLOAT) / CAST(COUNT(c.id) AS FLOAT) as rating')
       )
       .where('m.id', id)
