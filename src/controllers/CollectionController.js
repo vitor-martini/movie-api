@@ -88,18 +88,27 @@ class CollectionController {
       throw new AppError("User id is required.")
     }
 
-    const movies = await knex("collections as c")
-      .distinct([
-        "c.id",
-        "m.id as movie_id", 
-        "m.title",
-        "m.description",
-        "c.rating"
-      ])
-      .innerJoin("movies as m", "c.movie_id", "m.id")
-      .where("c.user_id", user_id)
-      .where("m.active", true)
-      .orderBy("m.title");
+    const movies = await knex('collections as c')
+      .select(
+        'c.id',
+        'm.id as movie_id',
+        'm.title',
+        'm.description',
+        knex.raw(`
+        (
+          SELECT 
+            CAST(SUM(c_aux.rating) AS FLOAT) / CAST(COUNT(c_aux.id) AS FLOAT)
+          FROM collections c_aux
+          INNER JOIN movies m_aux ON c_aux.movie_id = m_aux.id
+          WHERE m_aux.id = m.id
+        ) as rating
+      `)
+      )
+      .innerJoin('movies as m', 'c.movie_id', 'm.id')
+      .where('c.user_id', user_id)
+      .andWhere('m.active', true)
+      .groupBy('c.id', 'm.id', 'm.title', 'm.description')
+      .orderBy('m.title');
 
     const collectionsIds = movies.map(movie => movie.id)
     const moviesTags = await knex("tags")
