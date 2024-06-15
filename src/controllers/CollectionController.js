@@ -94,6 +94,7 @@ class CollectionController {
         'm.id as movie_id',
         'm.title',
         'm.description',
+        'm.cover',
         knex.raw(`
         (
           SELECT 
