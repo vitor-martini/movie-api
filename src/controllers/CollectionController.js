@@ -106,7 +106,7 @@ class CollectionController {
       )
       .innerJoin('movies as m', 'c.movie_id', 'm.id')
       .where('c.user_id', user_id)
-      .andWhere('m.active', true)
+      .andWhere('m.active', 1)
       .groupBy('c.id', 'm.id', 'm.title', 'm.description')
       .orderBy('m.title');
 
