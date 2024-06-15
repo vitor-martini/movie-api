@@ -83,6 +83,7 @@ class MovieController {
         knex.raw('CAST(SUM(c.rating) AS FLOAT) / CAST(COUNT(c.id) AS FLOAT) as rating')
       )
       .whereLike('m.title', `%${title ?? ''}%`)
+      .where('m.active', 1)
       .groupBy('m.id', 'm.title', 'm.description', 'm.cover')
       .orderBy('m.title');
 
