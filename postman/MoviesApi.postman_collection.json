@@ -31,17 +31,23 @@
 					"name": "Update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Vitor 1\"\n}",
+							"raw": "{\n    \"name\": \"Jane 2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://{{HOST}}:{{PORT}}/users/1"
+						"url": "http://{{HOST}}:{{PORT}}/users"
 					},
 					"response": []
 				},
@@ -160,6 +166,30 @@
 					"response": []
 				},
 				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{HOST}}:{{PORT}}/movies/1"
+					},
+					"response": []
+				},
+				{
 					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -175,14 +205,30 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Echoes\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://{{HOST}}:{{PORT}}/movies"
+						"url": {
+							"raw": "http://{{HOST}}:{{PORT}}/movies?title=sun",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"movies"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "sun"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -238,7 +284,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"movie_id\": 6,\n    \"rating\": 4\n}",
+							"raw": " {\n    \"movie_id\": 6\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -246,30 +292,6 @@
 							}
 						},
 						"url": "http://{{HOST}}:{{PORT}}/collections"
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n    \"rating\": 5\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://{{HOST}}:{{PORT}}/collections/4"
 					},
 					"response": []
 				},
@@ -313,7 +335,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Sun\",\n    \"tags\": [\"Férias\"]\n}",
+							"raw": "{\n    \"tags\": [\"Natal\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -376,6 +398,33 @@
 						"url": "http://{{HOST}}:{{PORT}}/collections/removeTag/12"
 					},
 					"response": []
+				},
+				{
+					"name": "Index",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{HOST}}:{{PORT}}/collections/tags"
+					},
+					"response": []
 				}
 			]
 		},
@@ -406,7 +455,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"jane@email.com\",\n    \"password\": 123\n}",
+							"raw": "{\n    \"email\": \"john@email.com\",\n    \"password\": 123\n}",
 							"options": {
 								"raw": {
 									"language": "json"
