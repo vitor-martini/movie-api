@@ -3,7 +3,7 @@ const knex = require("../database/knex/index.js")
 
 class CollectionController {
   async create(request, response) {
-    const { movie_id, rating } = request.body 
+    const { movie_id } = request.body 
     const user_id = request.user.id;
 
     const checkMovieExists = await knex("movies").where({ id: movie_id })
@@ -26,37 +26,9 @@ class CollectionController {
     await knex("collections").insert({
       movie_id,
       user_id,
-      rating
     })
 
     response.status(201).json()
-  }
-
-  async update(request, response) {
-    const { rating } = request.body 
-    const { id } = request.params
-    const user_id = request.user.id
-
-    const updatedCollection = await knex("collections")
-      .where({ 
-        id,
-        user_id
-      })
-      .first()
-
-    if (!updatedCollection){
-      throw new AppError("Collection not found")
-    }
-
-    updatedCollection.rating = rating ?? updatedCollection.rating
-
-    await knex("collections")
-      .where({ id })
-      .update({
-        rating: updatedCollection.rating,
-      })
-
-    response.json()
   }
 
   async delete(request, response) {
@@ -94,16 +66,7 @@ class CollectionController {
         'm.id as movie_id',
         'm.title',
         'm.description',
-        'm.cover',
-        knex.raw(`
-        (
-          SELECT 
-            CAST(SUM(c_aux.rating) AS FLOAT) / CAST(COUNT(c_aux.id) AS FLOAT)
-          FROM collections c_aux
-          INNER JOIN movies m_aux ON c_aux.movie_id = m_aux.id
-          WHERE m_aux.id = m.id
-        ) as rating
-      `)
+        'm.cover'
       )
       .innerJoin('movies as m', 'c.movie_id', 'm.id')
       .where('c.user_id', user_id)

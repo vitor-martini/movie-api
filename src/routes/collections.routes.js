@@ -9,7 +9,6 @@ const tagController = new TagController();
 
 collectionsRoutes.use(ensureAuthenticated);
 collectionsRoutes.post("/", collectionController.create);
-collectionsRoutes.put("/:id", collectionController.update);
 collectionsRoutes.get("/", collectionController.index);
 collectionsRoutes.delete("/:id", collectionController.delete);
 collectionsRoutes.post("/addTag", tagController.create);

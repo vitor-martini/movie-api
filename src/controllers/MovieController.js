@@ -60,8 +60,7 @@ class MovieController {
         'm.cover',
         'm.updated_at',
         'u.name as created_by',
-        'u.avatar',
-        knex.raw('CAST(SUM(c.rating) AS FLOAT) / CAST(COUNT(c.id) AS FLOAT) as rating')
+        'u.avatar'
       )
       .where('m.id', id)
       .groupBy('m.id', 'm.title', 'm.description', 'm.cover')
@@ -79,8 +78,7 @@ class MovieController {
         'm.id',
         'm.title',
         'm.description',
-        'm.cover',
-        knex.raw('CAST(SUM(c.rating) AS FLOAT) / CAST(COUNT(c.id) AS FLOAT) as rating')
+        'm.cover'
       )
       .whereLike('m.title', `%${title ?? ''}%`)
       .where('m.active', 1)
