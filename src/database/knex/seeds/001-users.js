@@ -5,19 +5,19 @@ exports.seed = async function(knex) {
       name: 'John Doe', 
       email: 'john@email.com', 
       password: '$2a$08$O.w9aYVZbRdqo5ccWigTsuXy5hKSrSZY9Gdxj03OzpDqrdUXJ7i8G',
-      admin: true 
+      role: "admin"
     },
     {
       name: 'Jane Doe',
       email: 'jane@email.com',
       password: '$2a$08$O.w9aYVZbRdqo5ccWigTsuXy5hKSrSZY9Gdxj03OzpDqrdUXJ7i8G',
-      admin: true 
+      role: "admin"
     }, 
     {
       name: 'John Smith',
       email: 'smith@email.com',
       password: '$2a$08$O.w9aYVZbRdqo5ccWigTsuXy5hKSrSZY9Gdxj03OzpDqrdUXJ7i8G',
-      admin: false 
+      role: "user"
     },
   ]);
 };
