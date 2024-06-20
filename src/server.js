@@ -3,27 +3,20 @@ const express = require("express")
 const routes = require("./routes")
 const AppError = require("./utils/AppError.js")
 const sqliteConnection = require("./database/sqlite")
+const cookieParser = require("cookie-parser")
 const uploadConfig = require("./configs/upload.js")
 const cors = require("cors")
 
 const app = express()
 const PORT = 3333;
 
-const allowedOrigins = ["*"]
-
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.find(x => x === "*")){
-      callback(null, true)
-    } else {
-      callback(new Error("Not allowed by CORS"))
-    }
-  }
-}))
+  origin: ["http://localhost:5173", "http://127.0.0.1:5173"], 
+  credentials: true 
+}));
 
 app.use(express.json())
+app.use(cookieParser()) 
 app.use(routes)
 app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
 sqliteConnection()
