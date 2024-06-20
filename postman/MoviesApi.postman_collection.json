@@ -31,13 +31,7 @@
 					"name": "Update",
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"Jane 2\"\n}",
@@ -55,13 +49,7 @@
 					"name": "Avatar",
 					"request": {
 						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -94,16 +82,10 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"title\": \"Cipher of the Sun\",\n    \"description\": \"In a world where sunlight can be harvested as energy, a brilliant young engineer uncovers a conspiracy that could monopolize sunlight forever. Teaming up with a group of rogue scientists, they embark on a dangerous mission to stop the conspiracy before it plunges the world into darkness.\"\n}",
+							"raw": " {\n    \"title\": \"Cipher of the Suasdasdasn\",\n    \"description\": \"In a world where sunlight can be harvested as energy, a brilliant young engineer uncovers a conspiracy that could monopolize sunlight forever. Teaming up with a group of rogue scientists, they embark on a dangerous mission to stop the conspiracy before it plunges the world into darkness.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -118,13 +100,7 @@
 					"name": "Update",
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": " {\n    \"title\": \"The Last Symphony\",\n    \"description\": \"In a post-apocalyptic world where music is banned, a defiant musician finds an old musical score that could lead to the revival of music, but must evade the authoritarian regime determined to silence her.\",\n    \"active\": 1\n}",
@@ -145,13 +121,7 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -169,13 +139,7 @@
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -196,13 +160,7 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -213,7 +171,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{HOST}}:{{PORT}}/movies?title=sun",
+							"raw": "http://{{HOST}}:{{PORT}}/movies?title=",
 							"protocol": "http",
 							"host": [
 								"{{HOST}}"
@@ -225,7 +183,7 @@
 							"query": [
 								{
 									"key": "title",
-									"value": "sun"
+									"value": ""
 								}
 							]
 						}
@@ -236,13 +194,7 @@
 					"name": "Cover",
 					"request": {
 						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -275,13 +227,7 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": " {\n    \"movie_id\": 6\n}",
@@ -299,13 +245,7 @@
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -326,13 +266,7 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"tags\": [\"Natal\"]\n}",
@@ -355,13 +289,7 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"collection_id\": 4,\n    \"name\": \"AVENTURA\"\n}",
@@ -379,13 +307,7 @@
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -406,13 +328,7 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -456,6 +372,36 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"email\": \"john@email.com\",\n    \"password\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{HOST}}:{{PORT}}/sessions"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
